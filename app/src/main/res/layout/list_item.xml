@@ -21,10 +21,9 @@
             android:padding="8dp">
 
             <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:id="@+id/vegImage"
+                android:layout_width="@android:dimen/thumbnail_width"
+                android:layout_height="@android:dimen/thumbnail_height"
                 app:srcCompat="@mipmap/potato" />
 
             <TextView
@@ -33,8 +32,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="25dp"
-                android:layout_toEndOf="@+id/imageView"
-                android:layout_weight="1"
+                android:layout_marginTop="8dp"
+                android:layout_toEndOf="@+id/vegImage"
                 android:text="TextView"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
@@ -44,20 +43,29 @@
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/vegName"
                 android:layout_below="@+id/vegName"
-                android:layout_marginTop="14dp"
-                android:layout_weight="1"
-                android:text="TextView" />
+                android:layout_marginTop="8dp"
+                android:text="TextView"
+                android:textSize="8sp" />
 
-            <ImageButton
+            <!--<ImageButton
                 android:id="@+id/addBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/imageView"
+                android:layout_alignBottom="@+id/vegImage"
                 android:layout_alignParentEnd="true"
                 android:layout_marginLeft="10dp"
                 android:background="#8BC34A"
                 android:padding="5dp"
-                app:srcCompat="@mipmap/ic_add_circle_white_24dp" />
+                app:srcCompat="@mipmap/ic_add_circle_white_24dp" />-->
+            <Button
+                android:id="@+id/addBtn"
+                android:layout_width="@dimen/button_size"
+                android:layout_height="@dimen/button_size"
+                android:layout_alignBottom="@+id/vegImage"
+                android:layout_alignParentEnd="true"
+                android:layout_marginLeft="10dp"
+                android:background="#8BC34A"
+                android:text="+" />
 
             <TextView
                 android:id="@+id/qty"
@@ -66,10 +74,12 @@
                 android:layout_alignBottom="@+id/addBtn"
                 android:layout_alignTop="@+id/addBtn"
                 android:layout_centerHorizontal="false"
+                android:layout_marginTop="5dp"
                 android:layout_toLeftOf="@+id/addBtn"
                 android:text="0" />
 
-            <ImageButton
+
+            <!--<ImageButton
                 android:id="@+id/removeBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -79,16 +89,27 @@
                 android:layout_toLeftOf="@+id/qty"
                 android:background="#FF5252"
                 android:padding="5dp"
-                app:srcCompat="@mipmap/ic_remove_circle_white_24dp" />
+                app:srcCompat="@mipmap/ic_remove_circle_white_24dp" />-->
+            <Button
+                android:id="@+id/removeBtn"
+                android:layout_width="@dimen/button_size"
+                android:layout_height="@dimen/button_size"
+                android:layout_alignParentBottom="false"
+                android:layout_alignTop="@+id/addBtn"
+                android:layout_marginRight="10dp"
+                android:layout_toLeftOf="@+id/qty"
+                android:background="#FF5252"
+                android:text="-" />
 
             <TextView
                 android:id="@+id/vegPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/vegDesc"
-                android:layout_alignTop="@+id/removeBtn"
+                android:layout_centerVertical="true"
                 android:text="TextView"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
 
         </RelativeLayout>
 

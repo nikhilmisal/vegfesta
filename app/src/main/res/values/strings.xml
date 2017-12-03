@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">Veg Festa</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_signin">Sign In/Register</string>
     <string name="action_cart">Cart</string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="action_orders">Orders</string>
+    <string name="action_logout">Log Out</string>
+    <string name="title_activity_login">Sign In</string>
+    <string name="register_activity">Register</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -16,4 +19,10 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <string-array name="weights">
+        <item>250gm</item>
+        <item>500gm</item>
+        <item>1Kg</item>
+    </string-array>
 </resources>
