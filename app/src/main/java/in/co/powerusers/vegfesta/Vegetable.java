@@ -7,13 +7,14 @@ package in.co.powerusers.vegfesta;
 public class Vegetable {
     private String vegName;
     private String vegDesc;
-    private double weight;
+    private String weight;
     private double qty;
     private double vegPrice;
     private String imageURL;
     private String vid;
+    private String inStock;
 
-    public Vegetable(String _vegName,String _vegDesc,double _weight,double _qty,double _vegPrice,String _imageURL,String _vid)
+    public Vegetable(String _vegName,String _vegDesc,String _weight,double _qty,double _vegPrice,String _imageURL,String _vid,String _inStock)
     {
         vegName = _vegName;
         vegDesc = _vegDesc;
@@ -22,6 +23,7 @@ public class Vegetable {
         vegPrice = _vegPrice;
         imageURL = _imageURL;
         vid = _vid;
+        inStock = _inStock;
     }
 
     public void setVegName(String _vegName){vegName = _vegName;}
@@ -32,9 +34,9 @@ public class Vegetable {
 
     public  String getVegDesc(){return vegDesc;}
 
-    public void setWeight(double _weight){weight = _weight;}
+    public void setWeight(String _weight){weight = _weight;}
 
-    public double getWeight(){return weight;}
+    public String getWeight(){return weight;}
 
     public void setQty(double _qty){qty = _qty;}
 
@@ -51,4 +53,8 @@ public class Vegetable {
     public void setVid(String _vid){vid = _vid;}
 
     public String getVid(){return vid;}
+
+    public void setInStock(String _inStock){inStock = _inStock;}
+
+    public String getInStock(){return inStock;}
 }

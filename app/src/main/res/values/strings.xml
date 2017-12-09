@@ -6,6 +6,7 @@
     <string name="action_logout">Log Out</string>
     <string name="title_activity_login">Sign In</string>
     <string name="register_activity">Register</string>
+    <string name="title_activity_confirm">Check Out</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

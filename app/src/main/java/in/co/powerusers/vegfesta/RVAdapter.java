@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -41,6 +42,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     private Context context;
     private static final String TAG = "RVAdapter";
     private DbConn db;
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
         CardView _cv;
         TextView _vegName;
@@ -51,6 +53,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
         ImageView _vegImage;
         Button _addBtn,_removeBtn,_wtBtn;
         RelativeLayout _cvLayout;
+
 
         public ViewHolder(View v){
             super(v);
@@ -81,45 +84,52 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(final RVAdapter.ViewHolder holder, final int position) {
         holder._vegName.setText(vegs.get(position).getVegName());
-        holder._vegDesc.setText(vegs.get(position).getVegDesc());
-        holder._vegPrice.setText("₹ "+vegs.get(position).getVegPrice());
-        //DbConn db = new DbConn(context);
-        holder._qty.setText(db.getVidQty(vegs.get(position).getVid())+"");
+        holder._vegDesc.setText(vegs.get(position).getWeight());
         _imageURL = vegs.get(position).getImageURL();
-
         try {
             //URL url = new URL("http://imnikhil.net/vegfesta/images/" + _imageURL);
             Bitmap bmp = new LoadImageTask().execute(_imageURL).get();
             holder._vegImage.setImageBitmap(bmp);
-        }catch(InterruptedException ie)
-        {ie.printStackTrace();}
-        catch(ExecutionException ee)
-        {ee.printStackTrace();}
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
+        } catch (ExecutionException ee) {
+            ee.printStackTrace();
+        }
 
+        if(vegs.get(position).getInStock().equals("Y")) {
+            holder._vegPrice.setText("₹ " + vegs.get(position).getVegPrice());
+            //DbConn db = new DbConn(context);
+            holder._qty.setText(db.getVidQty(vegs.get(position).getVid()) + "");
 
-        holder._addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int i = Integer.parseInt(holder._qty.getText().toString())+1;
-                holder._qty.setText(i+"");
-                cnt++;
-                if(mCallbacks!=null)
-                    mCallbacks.onButtonClick(new Vegetable(vegs.get(position).getVegName(),vegs.get(position).getVegDesc(),vegs.get(position).getWeight(),vegs.get(position).getQty(),vegs.get(position).getVegPrice(),null,vegs.get(position).getVid()),true);
-            }
-        });
-        holder._removeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int i = 0;
-                if(Integer.parseInt(holder._qty.getText().toString())>=1) {
-                    i = Integer.parseInt(holder._qty.getText().toString()) - 1;
-                    cnt--;
+            holder._addBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int i = Integer.parseInt(holder._qty.getText().toString()) + 1;
+                    holder._qty.setText(i + "");
+                    cnt++;
+                    if (mCallbacks != null)
+                        mCallbacks.onButtonClick(vegs.get(position), true);
                 }
-                holder._qty.setText(i+"");
-                if(mCallbacks!=null)
-                    mCallbacks.onButtonClick(new Vegetable(vegs.get(position).getVegName(),vegs.get(position).getVegDesc(),vegs.get(position).getWeight(),vegs.get(position).getQty(),vegs.get(position).getVegPrice(),null,vegs.get(position).getVid()),false);
-            }
-        });
+            });
+            holder._removeBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int i = 0;
+                    if (Integer.parseInt(holder._qty.getText().toString()) >= 1) {
+                        i = Integer.parseInt(holder._qty.getText().toString()) - 1;
+                        cnt--;
+                    }
+                    holder._qty.setText(i + "");
+                    if (mCallbacks != null)
+                        mCallbacks.onButtonClick(vegs.get(position), false);
+                }
+            });
+        }else{
+            holder._vegPrice.setText("Coming Soon");
+            holder._qty.setVisibility(View.GONE);
+            holder._addBtn.setVisibility(View.GONE);
+            holder._removeBtn.setVisibility(View.GONE);
+        }
     }
 
     @Override

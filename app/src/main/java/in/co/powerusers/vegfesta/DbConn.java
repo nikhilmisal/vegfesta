@@ -71,7 +71,7 @@ public class DbConn extends SQLiteAssetHelper {
         Cursor cr =db.rawQuery(selectQuery,null);
         if(cr.moveToFirst()){
             do{
-                vegs.add(new Vegetable(cr.getString(0),null,0.0,cr.getDouble(1),cr.getDouble(2),null,cr.getString(3)));
+                vegs.add(new Vegetable(cr.getString(0),null,null,cr.getDouble(1),cr.getDouble(2),null,cr.getString(3),null));
                 Log.d(TAG,cr.getString(0)+"------"+cr.getDouble(1)+"------"+cr.getDouble(2)+"------"+cr.getDouble(3));
             }while (cr.moveToNext());
         }

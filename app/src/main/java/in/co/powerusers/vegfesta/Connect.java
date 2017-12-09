@@ -2,6 +2,7 @@ package in.co.powerusers.vegfesta;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.JsonReader;
 import android.util.Log;
@@ -106,6 +107,8 @@ public class Connect {
                 Double _vprice = 0.0;
                 String _vimage = "";
                 String _vid = "";
+                String _vweight = "";
+                String _inStock = "";
                 jreader.beginObject();
                 while(jreader.hasNext()){
                     String name = jreader.nextName();
@@ -113,13 +116,17 @@ public class Connect {
                         _vname = jreader.nextString();
                     if(name.equals("vegPrice"))
                         _vprice = jreader.nextDouble();
+                    if(name.equals("vegWeight"))
+                        _vweight = jreader.nextString();
                     if(name.equals("vegImage"))
                         _vimage = jreader.nextString();
                     if(name.equals("vid"))
                         _vid = jreader.nextString();
+                    if(name.equals("instock"))
+                        _inStock = jreader.nextString();
                 }
                 jreader.endObject();
-                veg = new Vegetable(_vname,_vname,0.0,0.0,_vprice,_vimage,_vid);
+                veg = new Vegetable(_vname,_vname,_vweight,0.0,_vprice,_vimage,_vid,_inStock);
                 vegs.add(veg);
             }
             jreader.endArray();
@@ -141,7 +148,7 @@ public class Connect {
             //JSONArray jsA = new JSONArray();
             for(Vegetable veg: vegs)
             {
-                totalAmt = totalAmt + veg.getQty();
+                totalAmt = totalAmt + veg.getVegPrice();
                 Log.d(TAG,veg.getVid()+"----"+veg.getQty()+"-----"+veg.getVegPrice());
                 sb.append(veg.getVid()+":"+veg.getQty()+":"+veg.getVegPrice()+"?");
             }

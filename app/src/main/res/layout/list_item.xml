@@ -22,8 +22,8 @@
 
             <ImageView
                 android:id="@+id/vegImage"
-                android:layout_width="@android:dimen/thumbnail_width"
-                android:layout_height="@android:dimen/thumbnail_height"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 app:srcCompat="@mipmap/potato" />
 
             <TextView
@@ -35,7 +35,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_toEndOf="@+id/vegImage"
                 android:text="TextView"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
             <TextView
                 android:id="@+id/vegDesc"
@@ -45,7 +45,7 @@
                 android:layout_below="@+id/vegName"
                 android:layout_marginTop="8dp"
                 android:text="TextView"
-                android:textSize="8sp" />
+                android:textSize="12sp" />
 
             <!--<ImageButton
                 android:id="@+id/addBtn"
@@ -105,10 +105,12 @@
                 android:id="@+id/vegPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/qty"
+                android:layout_alignBottom="@+id/qty"
                 android:layout_alignStart="@+id/vegDesc"
-                android:layout_centerVertical="true"
                 android:text="TextView"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textSize="14sp" />
 
 
         </RelativeLayout>
