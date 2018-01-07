@@ -5,4 +5,5 @@
     <color name="colorAccent">#795548</color>
     <color name="transparent">#80000000</color>
     <color name="light_gray">#dddddd</color>
+    <color name="home_background">#95bd07</color>
 </resources>

@@ -4,9 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,26 +39,39 @@ public class HomeActivity extends AppCompatActivity implements RVAdapter.Callbac
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        Connect conn = new Connect();
-        vegs = conn.getInventory();
-        db = new DbConn(this);
 
+        ConnectivityManager cm =
+                (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        boolean isConnected = activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
         vegList = (RecyclerView) findViewById(R.id.recyclerVw);
-        vegList.setHasFixedSize(true);
-        vegList.setNestedScrollingEnabled(false);
-        layoutManager = new LinearLayoutManager(this);
-        vegList.setLayoutManager(layoutManager);
-        populateVegs();
+        if(isConnected) {
 
-        cartCount = db.getCartCount();
+            vegList.setHasFixedSize(true);
+            vegList.setNestedScrollingEnabled(false);
+            layoutManager = new LinearLayoutManager(this);
+            vegList.setLayoutManager(layoutManager);
 
+            Connect conn = new Connect();
+            vegs = conn.getInventory();
+            db = new DbConn(this);
+            populateVegs();
+
+            cartCount = db.getCartCount();
+        }else
+        {
+            Snackbar.make(vegList,"Internet Connection Not Available",Snackbar.LENGTH_SHORT);
+            finish();
+        }
     }
 
     private void populateVegs()
     {
         layoutManager = new LinearLayoutManager(this);
         vegList.setLayoutManager(layoutManager);
-        adapter = new RVAdapter(vegs,this,getApplicationContext());
+        adapter = new RVAdapter(vegs,this,getApplicationContext(),vegList);
         vegList.setAdapter(adapter);
     }
 
@@ -98,6 +115,10 @@ public class HomeActivity extends AppCompatActivity implements RVAdapter.Callbac
         }
         if(id == R.id.action_orders){
             startActivity(new Intent(getApplicationContext(),OrderActivity.class));
+            //OrderFragment ordrFragment = new OrderFragment();
+            //FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            //transaction.replace(R.id.recyclerVw,ordrFragment);
+            //transaction.commit();
         }if(id == R.id.action_logout){
             db.logOut();
             invalidateOptionsMenu();

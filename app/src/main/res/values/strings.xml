@@ -17,6 +17,7 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
+    <string name="error_invalid_mobile">This mobile no is invalid</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
@@ -25,5 +26,11 @@
         <item>250gm</item>
         <item>500gm</item>
         <item>1Kg</item>
+    </string-array>
+    
+    <string-array name="addrtype">
+        <item>Home</item>
+        <item>Office</item>
+        <item>Other</item>
     </string-array>
 </resources>

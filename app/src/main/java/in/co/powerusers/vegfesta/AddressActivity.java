@@ -11,12 +11,14 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class AddressActivity extends AppCompatActivity {
 
     private TextView naddressLine1,naddressLine2,nlandmark,ncitystate,npincode;
     private EditText addressLine1,addressLine2,landmark,city,state,pincode;
+    private Spinner addrType;
     private Button addAddrBtn;
     private DbConn db;
     private CardView cv;
@@ -37,6 +39,7 @@ public class AddressActivity extends AppCompatActivity {
         city = (EditText)findViewById(R.id.city);
         state = (EditText)findViewById(R.id.state);
         pincode = (EditText)findViewById(R.id.pincode);
+        addrType = (Spinner)findViewById(R.id.addrType);
 
         addAddrBtn = (Button)findViewById(R.id.addAddrBtn);
         cv = (CardView)findViewById(R.id.cvAddress);
@@ -69,6 +72,7 @@ public class AddressActivity extends AppCompatActivity {
                 String aCity = city.getText().toString();
                 String aState = state.getText().toString();
                 String aPincode = pincode.getText().toString();
+                String aAddrType = addrType.getSelectedItem().toString();
                 if(TextUtils.isEmpty(aLine1))
                 {
                     addressLine1.setError("This field is required");
@@ -91,7 +95,9 @@ public class AddressActivity extends AppCompatActivity {
                 }
                 if(!TextUtils.isEmpty(aLine1) && !TextUtils.isEmpty(aCity) && !TextUtils.isEmpty(aState) && !TextUtils.isEmpty(aPincode))
                 {
-                    boolean flg = db.addAddress("HOME",aLine1,aLine2,aLandmark,aCity,aState,Integer.valueOf(aPincode));
+                    boolean flg = db.addAddress(aAddrType,aLine1,aLine2,aLandmark,aCity,aState,Integer.valueOf(aPincode));
+                    Connect conn = new Connect();
+                    conn.addAddress(aAddrType,aLine1.replaceAll(" ","+"),aLine2 == null ? aLine2 : aLine2.replaceAll(" ","+"),aLandmark == null ? aLandmark : aLandmark.replaceAll(" ","+"),aCity.replaceAll(" ","+"),aState.replaceAll(" ","+"),aPincode,db.getLoggedInId());
                     if(flg){
                         startActivity(new Intent(getApplicationContext(),ConfirmActivity.class));
                     }else{

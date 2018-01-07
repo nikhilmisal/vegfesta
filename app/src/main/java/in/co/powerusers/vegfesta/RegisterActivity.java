@@ -9,6 +9,7 @@ import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.JsonReader;
 import android.view.View;
 import android.widget.Button;
@@ -44,7 +45,19 @@ public class RegisterActivity extends AppCompatActivity {
         rsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!rname.equals("") && !remail.equals("") && !rmobile.equals("") && !rpass.equals(""))
+                if (!TextUtils.isEmpty(rpass.getText().toString()) && !isPasswordValid(rpass.getText().toString())) {
+                    rpass.setError(getString(R.string.error_invalid_password));
+                    rpass.requestFocus();
+                }
+                if (!isEmailValid(remail.getText().toString())) {
+                    remail.setError(getString(R.string.error_invalid_email));
+                    remail.requestFocus();
+                }
+                if (!isMobileValid(rmobile.getText().toString())) {
+                    rmobile.setError(getString(R.string.error_invalid_mobile));
+                    rmobile.requestFocus();
+                }
+                if(!rname.getText().toString().equals("") && !remail.getText().toString().equals("") && !rmobile.getText().toString().equals("") && !rpass.getText().toString().equals("") && isPasswordValid(rpass.getText().toString()) && isEmailValid(remail.getText().toString()))
                 {
                     try {
                         showProgress(true);
@@ -59,6 +72,18 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private boolean isEmailValid(String email) {
+        //TODO: Replace this with your own logic
+        return email.contains("@");
+    }
+    private boolean isPasswordValid(String password) {
+        //TODO: Replace this with your own logic
+        return password.length() > 4;
+    }
+    private boolean isMobileValid(String mobileno){
+        return mobileno.length() == 10;
     }
 
     /**
@@ -99,6 +124,12 @@ public class RegisterActivity extends AppCompatActivity {
 
     class JsonTask extends AsyncTask<String, Void, String>
     {
+        @Override
+        protected  void onPreExecute()
+        {
+            showProgress(true);
+        }
+
         protected String doInBackground(String... params)
         {
             String stat = "";

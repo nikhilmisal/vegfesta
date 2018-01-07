@@ -45,7 +45,7 @@
                 android:layout_below="@+id/vegName"
                 android:layout_marginTop="8dp"
                 android:text="TextView"
-                android:textSize="12sp" />
+                android:textSize="16sp" />
 
             <!--<ImageButton
                 android:id="@+id/addBtn"

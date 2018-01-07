@@ -242,7 +242,7 @@ public class DbConn extends SQLiteAssetHelper {
         if(cr.moveToFirst()){
             emailid = cr.getString(0);
         }
-        Log.d(TAG,"emailid ===> "+emailid);
+        //Log.d(TAG,"emailid ===> "+emailid);
         return emailid;
     }
 

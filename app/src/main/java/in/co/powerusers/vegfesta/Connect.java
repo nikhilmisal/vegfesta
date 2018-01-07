@@ -140,7 +140,12 @@ public class Connect {
     {
         DbConn db = new DbConn(context);
         List<Vegetable> vegs = db.getCartItems();
-        //Cursor cr = db.getCartItems();
+        Cursor cr = db.getAddress();
+        String addrType = "";
+        if(cr.moveToFirst())
+        {
+            addrType = cr.getString(0);
+        }
         boolean flg = false;
         double totalAmt = 0.0;
         StringBuilder sb = new StringBuilder();
@@ -157,7 +162,7 @@ public class Connect {
             //jsOFinal.put("items",jsA);
             //jsOFinal.put("totalamt",totalAmt);
             //jsOFinal.put("emailid",db.getLoggedInId());
-            String[] params = {"rtype|CRORDER","items|"+sb.toString(),"totalamt|"+totalAmt,"emailid|"+db.getLoggedInId()};
+            String[] params = {"rtype|CRORDER","items|"+sb.toString(),"totalamt|"+totalAmt,"emailid|"+db.getLoggedInId(),"addrType|"+addrType};
             JsonReader jreader = new JsonTask().execute(params).get();
             jreader.beginObject();
             while(jreader.hasNext()){
@@ -218,6 +223,24 @@ public class Connect {
         return orders;
     }
 
+    public void addAddress(String addrtype,String address1,String address2,String landmark,String city,String state,String pincode,String emailid)
+    {
+        try{
+            String[] params = {"rtype|ADDADDR","emailid|"+emailid,"addrtype|"+addrtype,"addr1|"+address1,"addr2|"+address2,"landmark|"+landmark,"city|"+city,"state|"+state,"pincode|"+pincode};
+            JsonReader jreader = new JsonTask().execute(params).get();
+            boolean flg = false;
+            jreader.beginObject();
+            while(jreader.hasNext()){
+                String name = jreader.nextName();
+                if(name.equals("result")){
+                    flg = jreader.nextString().equals("Success");
+                }
+            }
+        }catch(IOException ie){ie.printStackTrace();}
+        catch(InterruptedException ine){ine.printStackTrace();}
+        catch(ExecutionException ee){ee.printStackTrace();}
+    }
+
     private JsonReader CallService(String... params)
     {
         String stat = "";
@@ -255,11 +278,15 @@ public class Connect {
                 HttpURLConnection connection = null;
                 StringBuilder query = new StringBuilder();
                 for (int i = 0; i < params.length; i++) {
-                    System.out.println("===> " + params[i]);
-                    query.append(params[i].split("\\|")[0] + "=" + params[i].split("\\|")[1] + "&");
+                    //System.out.println("===> " + params[i]);
+                    if(params[i].split("\\|").length>1) {
+                        query.append(params[i].split("\\|")[0] + "=" + params[i].split("\\|")[1] + "&");
+                    }else {
+                        query.append(params[i].split("\\|")[0] + "=&");
+                    }
                 }
-                query.setLength(query.length() - 1);
-                //System.out.println("http://imnikhil.net/vegfesta/connect.php?" + query.toString());
+                //query.setLength(query.length() - 1);
+                System.out.println("http://imnikhil.net/vegfesta/connect.php?" + query.toString());
                 URL url = new URL("http://imnikhil.net/vegfesta/connect.php?" + query.toString());
                 connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");

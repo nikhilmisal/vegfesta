@@ -162,19 +162,43 @@
                 android:ems="10"
                 android:inputType="textPersonName" />
 
-            <TextView
-                android:id="@+id/textView15"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:text="Pin Code" />
+                android:layout_height="match_parent">
 
-            <EditText
-                android:id="@+id/pincode"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="number" />
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Pin Code" />
+
+                <EditText
+                    android:id="@+id/pincode"
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/textView15"
+                    android:ems="10"
+                    android:inputType="number" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginEnd="92dp"
+                    android:text="Address Type" />
+
+                <Spinner
+                    android:id="@+id/addrType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/textView7"
+                    android:layout_alignTop="@+id/pincode"
+                    android:entries="@array/addrtype" />
+            </RelativeLayout>
 
             <Button
                 android:id="@+id/addAddrBtn"
